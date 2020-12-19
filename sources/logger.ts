@@ -5,7 +5,7 @@ import path from 'path'
 // logger
 export function CreateLogger(dir: string) {
     let logger = winston.createLogger({
-        level: 'info'
+        level: process.env.LOGGER_LEVEL || 'info'
     });
 
     logger.add(
