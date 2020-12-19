@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import { PromiseResult } from 'aws-sdk/lib/request';
-AWS.config.update({ region: "ap-northeast-2" });
+AWS.config.update({ region: process.env.AWS_REGION || "ap-northeast-2" });
 
 const targetInstance = process.env.AWS_EC2_TARGET_INSTANCE_ID || "";
 
