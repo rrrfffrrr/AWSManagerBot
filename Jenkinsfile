@@ -22,7 +22,7 @@ node {
 
     /// Deploy
         stage('Deploy container') {
-            sh 'docker container rm -v -f AWSServerManagerBot'
+            sh 'docker container rm -v -f AWSServerManagerBot; exit 0'
             container = newImage.run("--restart always --name AWSServerManagerBot -v " + params.HOST_DATABASE_DIR + ":/usr/src/app/database -e DISCORD_TOKEN='" + params.DISCORD_TOKEN + "' -e AWS_ACCESS_KEY_ID='" + params.AWS_ACCESS_KEY_ID + "' -e AWS_SECRET_ACCESS_KEY='" + params.AWS_SECRET_ACCESS_KEY + "' -e SERVER_OWNER_DISCORD_ID='" + params.SERVER_OWNER_DISCORD_ID + "'")
         }
     }
