@@ -99,7 +99,8 @@ commandRouter.add(/^!서버리스트/, async (msg:Message) => {
                 str += `Reservation(${r.ReservationId}): ${r.OwnerId}\n`;
                 r.Instances?.every((i) => {
                     let name = i.Tags?.find((v) => {return v.Key == "Name"})?.Value || undefined;
-                    str += `EC2 instance: ${name}(${i.InstanceId}) ${i.State?.Name}.\n`;
+                    let subname = i.Tags?.find((v) => {return v.Key == "SubName"})?.Value || undefined;
+                    str += `EC2 instance: ${name}-${subname || ''}(${i.InstanceId}) ${i.State?.Name}.\n`;
                 })
                 str += '\n';
             })
@@ -121,7 +122,8 @@ commandRouter.add(/^!서버아이피/, async (msg:Message) => {
                 str += `Reservation(${r.ReservationId}): ${r.OwnerId}\n`;
                 r.Instances?.every((i) => {
                     let name = i.Tags?.find((v) => {return v.Key == "Name"})?.Value || undefined;
-                    str += `EC2 instance: ${name}(${i.InstanceId}) ${i.State?.Name} - ${i.PublicIpAddress || "Not assigned"}.\n`;
+                    let subname = i.Tags?.find((v) => {return v.Key == "SubName"})?.Value || undefined;
+                    str += `EC2 instance: ${name}-${subname || ''}(${i.InstanceId}) ${i.State?.Name} - ${i.PublicIpAddress || "Not assigned"}.\n`;
                 })
                 str += '\n';
             })
