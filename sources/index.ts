@@ -110,6 +110,28 @@ commandRouter.add(/^!서버리스트/, async (msg:Message) => {
         })
     });
 });
+logger.verbose("Add 서버아이피 command");
+commandRouter.add(/^!서버아이피/, async (msg:Message) => {
+    IsAuthorized(msg, () => {
+        logger.info(`${msg.member?.displayName}(${msg.member?.id}) run command(EC2.describeInstances with ip).`);
+        let splitedCommand = msg.content.split(MESSAGE_SEPERATOR);
+        ec2.describeInstances({ DryRun: false, InstanceIds: splitedCommand.slice(1), Filters: [ { Name: 'tag:Name', Values: ['CSGO'] } ] }).promise().then((result) => {
+            let str = "";
+            result.Reservations?.every((r) => {
+                str += `Reservation(${r.ReservationId}): ${r.OwnerId}\n`;
+                r.Instances?.every((i) => {
+                    let name = i.Tags?.find((v) => {return v.Key == "Name"})?.Value || undefined;
+                    str += `EC2 instance: ${name}(${i.InstanceId}) ${i.State?.Name} - ${i.PublicIpAddress || "Not assigned"}.\n`;
+                })
+                str += '\n';
+            })
+            msg.channel.send(str);
+        }).catch((e) => {
+            logger.error(e);
+            msg.reply("서버리스트를 받아오는데 문제가 발생했습니다.");
+        })
+    });
+});
 logger.verbose("Add 서버시작 command");
 commandRouter.add(/^!서버((구동)|(시작))/, async (msg:Message) => {
     IsAuthorized(msg, ()=>{
