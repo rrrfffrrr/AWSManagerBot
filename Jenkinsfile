@@ -10,7 +10,7 @@ node {
         stage('Build') {
             /* This builds the actual image; synonymous to
             * docker build on the command line */
-                newImage = docker.build("AWSServerManagerBot:${env.BUILD_ID}")
+                newImage = docker.build("aws_server_manager_bot:${env.BUILD_ID}")
         }
 
     /// Test
