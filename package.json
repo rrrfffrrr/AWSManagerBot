@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile": "./node_modules/.bin/tsc",
+    "build": "./node_modules/.bin/tsc",
     "debug": "./node_modules/.bin/ts-node -r dotenv/config ./sources/index.ts",
     "start": "node output/index.js"
   },
