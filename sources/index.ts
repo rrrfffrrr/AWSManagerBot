@@ -13,6 +13,7 @@ import { verbose } from 'sqlite3';
 const DB_PATH = process.env.DB_PATH || '.';
 const DB_FILE = 'Data.db';
 let db = new (verbose().Database)(path.join(DB_PATH, DB_FILE));
+logger.info("Initializing db tables");
 db.run("CREATE TABLE IF NOT EXISTS aws_db_info (\
     db_version INTEGER PRIMARY KEY\
 );");
