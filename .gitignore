@@ -1,5 +1,6 @@
 output/
 .env
+Data.db
 
 # Logs
 logs
