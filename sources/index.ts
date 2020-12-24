@@ -26,12 +26,6 @@ logger.info("Initializing AWS SDK");
 import AWS, { AWSError } from 'aws-sdk';
 AWS.config.update({ region: process.env.AWS_REGION || "ap-northeast-2" });
 const ec2 = new AWS.EC2();
-const targetInstance = process.env.AWS_EC2_TARGET_INSTANCE_ID || "";
-if (targetInstance === "") {
-    logger.error("Target EC2 instance not specified.");
-    process.exitCode = 1;
-    throw new Error("Target EC2 instance not specified.");
-}
 
 // discord
 logger.info("Initializing Discord.js");
