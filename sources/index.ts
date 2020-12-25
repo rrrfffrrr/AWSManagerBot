@@ -67,7 +67,22 @@ commandRouter.add(/^!명령어(목록)?/, async (msg:Message) => {
                 fields: [
                     {
                         name: '명령어 목록',
-                        value: '!서버리스트, !서버시작 [i-...], !서버정지 [i-...], !서버아이피 [i-...]'
+                        value: '!서버리스트, !서버시작 [i-...], !서버정지 [i-...], !서버아이피 [i-...], !후원'
+                    }
+                ]
+            }
+        })
+    });
+});
+logger.verbose("Add 후원링크 command");
+commandRouter.add(/^!후원(링크)?/, async (msg:Message) => {
+    IsAuthorized(msg, () => {
+        msg.channel.send({
+            embed: {
+                fields: [
+                    {
+                        name: '페이팔 후원',
+                        value: 'https://paypal.me/rrrfffrrr'
                     }
                 ]
             }
