@@ -59,6 +59,21 @@ function IsAuthorized(msg: Message, success: Function, fail: Function | undefine
         fail();
     }
 }
+logger.verbose("Add 명령어목록 command");
+commandRouter.add(/^!명령어(목록)?/, async (msg:Message) => {
+    IsAuthorized(msg, () => {
+        msg.channel.send({
+            embed: {
+                fields: [
+                    {
+                        name: '명령어 목록',
+                        value: '!서버리스트, !서버시작 [i-...], !서버정지 [i-...], !서버아이피 [i-...]'
+                    }
+                ]
+            }
+        })
+    });
+});
 logger.verbose("Add 관리자추가 command");
 commandRouter.add(/^!관리자추가/, async (msg:Message) => {
     if (msg.member?.id !== process.env.SERVER_OWNER_DISCORD_ID) {
