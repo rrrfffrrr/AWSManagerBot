@@ -59,6 +59,36 @@ function IsAuthorized(msg: Message, success: Function, fail: Function | undefine
         fail();
     }
 }
+logger.verbose("Add 명령어목록 command");
+commandRouter.add(/^!명령어(목록)?/, async (msg:Message) => {
+    IsAuthorized(msg, () => {
+        msg.channel.send({
+            embed: {
+                fields: [
+                    {
+                        name: '명령어 목록',
+                        value: '!서버리스트, !서버시작 [i-...], !서버정지 [i-...], !서버아이피 [i-...], !후원'
+                    }
+                ]
+            }
+        })
+    });
+});
+logger.verbose("Add 후원링크 command");
+commandRouter.add(/^!후원(링크)?/, async (msg:Message) => {
+    IsAuthorized(msg, () => {
+        msg.channel.send({
+            embed: {
+                fields: [
+                    {
+                        name: '페이팔 후원',
+                        value: 'https://paypal.me/rrrfffrrr'
+                    }
+                ]
+            }
+        })
+    });
+});
 logger.verbose("Add 관리자추가 command");
 commandRouter.add(/^!관리자추가/, async (msg:Message) => {
     if (msg.member?.id !== process.env.SERVER_OWNER_DISCORD_ID) {
@@ -99,7 +129,8 @@ commandRouter.add(/^!서버리스트/, async (msg:Message) => {
                 str += `Reservation(${r.ReservationId}): ${r.OwnerId}\n`;
                 r.Instances?.every((i) => {
                     let name = i.Tags?.find((v) => {return v.Key == "Name"})?.Value || undefined;
-                    str += `EC2 instance: ${name}(${i.InstanceId}) ${i.State?.Name}.\n`;
+                    let subname = i.Tags?.find((v) => {return v.Key == "SubName"})?.Value || undefined;
+                    str += `EC2 instance: ${name}-${subname || ''}(${i.InstanceId}) ${i.State?.Name}.\n`;
                 })
                 str += '\n';
             })
@@ -121,7 +152,8 @@ commandRouter.add(/^!서버아이피/, async (msg:Message) => {
                 str += `Reservation(${r.ReservationId}): ${r.OwnerId}\n`;
                 r.Instances?.every((i) => {
                     let name = i.Tags?.find((v) => {return v.Key == "Name"})?.Value || undefined;
-                    str += `EC2 instance: ${name}(${i.InstanceId}) ${i.State?.Name} - ${i.PublicIpAddress || "Not assigned"}.\n`;
+                    let subname = i.Tags?.find((v) => {return v.Key == "SubName"})?.Value || undefined;
+                    str += `EC2 instance: ${name}-${subname || ''}(${i.InstanceId}) ${i.State?.Name} - ${i.PublicIpAddress || "Not assigned"}.\n`;
                 })
                 str += '\n';
             })
